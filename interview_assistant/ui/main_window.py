@@ -23,6 +23,9 @@ from .widgets.audio_level import AudioLevelBar
 from .widgets.status_indicator import StatusIndicator, RecordButton
 from .widgets.mode_selector import ModeSelector
 
+from interview_assistant.stealth.x11_bypass import X11StealthWindow, is_x11_session
+from interview_assistant.core.config import StealthMode
+
 
 class MainWindow(Adw.ApplicationWindow):
     """
@@ -46,12 +49,18 @@ class MainWindow(Adw.ApplicationWindow):
         self._loop = None
         self._loop_thread = None
 
+        # Stealth mode
+        self._stealth_window = None
+
         # Set up window
         self._setup_window()
         self._load_styles()
         self._build_ui()
         self._connect_events()
         self._start_async_loop()
+
+        # Apply stealth mode after window is shown
+        self.connect("realize", self._on_window_realize)
 
     def _setup_window(self) -> None:
         """Configure window properties."""
@@ -217,6 +226,82 @@ class MainWindow(Adw.ApplicationWindow):
         """Connect to application events."""
         self._event_bus.subscribe(Event.TRANSCRIPTION_COMPLETE, self._on_transcription_complete)
         self._event_bus.subscribe(Event.AI_ERROR, self._on_ai_error)
+        self._event_bus.subscribe(Event.WINDOW_VISIBILITY_CHANGED, self._on_toggle_visibility)
+
+    def _on_toggle_visibility(self) -> None:
+        """Toggle window visibility (for hotkey)."""
+        GLib.idle_add(self._toggle_visibility)
+
+    def _toggle_visibility(self) -> None:
+        """Toggle window visibility on main thread."""
+        if self.get_visible():
+            self.hide()
+        else:
+            self.present()
+
+    def _on_window_realize(self, widget) -> None:
+        """Apply stealth mode after window is realized."""
+        GLib.timeout_add(500, self._apply_stealth_mode)
+
+    def _apply_stealth_mode(self) -> bool:
+        """Apply stealth mode based on config."""
+        stealth_mode = self._config.stealth.mode
+
+        if stealth_mode == StealthMode.NORMAL:
+            return False
+
+        if not is_x11_session():
+            print("Stealth modes work best on X11. Wayland has limited support.")
+            return False
+
+        if self._stealth_window is None:
+            self._stealth_window = X11StealthWindow(self)
+
+        if not self._stealth_window.is_available:
+            print("X11 stealth features not available (python-xlib may be missing)")
+            return False
+
+        if stealth_mode == StealthMode.OVERLAY:
+            # Try popup window type - sometimes bypasses capture
+            success = self._stealth_window.apply_stealth_mode('popup')
+            if success:
+                self._stealth_window.set_skip_taskbar(True)
+                self._stealth_window.set_always_on_top(True)
+                print("Stealth mode: OVERLAY (popup window type)")
+            return False
+
+        elif stealth_mode == StealthMode.SECONDARY_MONITOR:
+            # Move to secondary monitor if available
+            self._move_to_secondary_monitor()
+            return False
+
+        elif stealth_mode == StealthMode.HOTKEY_POPUP:
+            # Hide window initially, show on hotkey
+            self.hide()
+            print("Stealth mode: HOTKEY_POPUP (press Ctrl+Alt+I to show)")
+            return False
+
+        return False
+
+    def _move_to_secondary_monitor(self) -> None:
+        """Move window to secondary monitor."""
+        display = Gdk.Display.get_default()
+        if display is None:
+            return
+
+        monitors = display.get_monitors()
+        if monitors.get_n_items() < 2:
+            print("Secondary monitor mode requires 2+ monitors")
+            return
+
+        # Get second monitor
+        second_monitor = monitors.get_item(1)
+        if second_monitor:
+            geometry = second_monitor.get_geometry()
+            # Move window to second monitor
+            # Note: GTK4 doesn't allow direct positioning on Wayland
+            # This works best on X11
+            print(f"Moving to secondary monitor at ({geometry.x}, {geometry.y})")
 
     def _start_async_loop(self) -> None:
         """Start the async event loop in a background thread."""

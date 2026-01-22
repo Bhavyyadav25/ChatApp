@@ -68,7 +68,7 @@ class TranscriptionSettings(BaseModel):
 
 class StealthSettings(BaseModel):
     """Screen-share avoidance settings."""
-    mode: StealthMode = StealthMode.NORMAL
+    mode: StealthMode = StealthMode.OVERLAY  # Default to overlay for stealth
     auto_hide_timeout: int = 5000  # ms
     opacity: float = 0.95
     always_on_top: bool = True
