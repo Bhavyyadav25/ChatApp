@@ -378,9 +378,19 @@ class MainWindow(Adw.ApplicationWindow):
 
             self._status_indicator.set_state(StatusIndicator.State.RECORDING)
 
+            # Auto-hide window in stealth mode (view answers on phone instead)
+            if self._config.stealth.mode != StealthMode.NORMAL:
+                GLib.timeout_add(1500, self._auto_hide_for_stealth)
+
         except Exception as e:
             self._show_error(f"Error starting recording: {e}")
             self._record_button.set_active(False)
+
+    def _auto_hide_for_stealth(self) -> bool:
+        """Auto-hide window for stealth mode."""
+        print("Auto-hiding window - view answers on your phone!")
+        self.hide()
+        return False  # Don't repeat
 
     def _stop_recording(self) -> None:
         """Stop audio capture and transcription."""
