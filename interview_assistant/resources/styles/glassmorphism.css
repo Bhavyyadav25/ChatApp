@@ -1,0 +1,414 @@
+/* Interview Assistant - Glassmorphism Theme */
+
+/* Color palette - Catppuccin Mocha inspired */
+@define-color bg_dark rgba(30, 30, 46, 0.95);
+@define-color bg_medium rgba(45, 45, 65, 0.85);
+@define-color bg_light rgba(60, 60, 80, 0.75);
+@define-color surface rgba(49, 50, 68, 0.9);
+@define-color overlay rgba(108, 112, 134, 0.2);
+
+@define-color text_primary rgba(205, 214, 244, 1.0);
+@define-color text_secondary rgba(166, 173, 200, 1.0);
+@define-color text_muted rgba(127, 132, 156, 1.0);
+
+@define-color accent_blue rgba(137, 180, 250, 1.0);
+@define-color accent_green rgba(166, 227, 161, 1.0);
+@define-color accent_red rgba(243, 139, 168, 1.0);
+@define-color accent_yellow rgba(249, 226, 175, 1.0);
+@define-color accent_purple rgba(203, 166, 247, 1.0);
+
+@define-color border_color rgba(255, 255, 255, 0.1);
+@define-color border_focus rgba(137, 180, 250, 0.5);
+
+/* Window */
+window.background {
+    background-color: @bg_dark;
+}
+
+window.transparent-bg {
+    background-color: transparent;
+}
+
+/* Header bar */
+headerbar {
+    background-color: @bg_medium;
+    border-bottom: 1px solid @border_color;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    min-height: 42px;
+    padding: 0 8px;
+}
+
+headerbar .title {
+    color: @text_primary;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Glass panels */
+.glass-panel {
+    background-color: @bg_medium;
+    border: 1px solid @border_color;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card {
+    background-color: @bg_light;
+    border: 1px solid @border_color;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.glass-surface {
+    background-color: @surface;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/* Text styles */
+.text-primary {
+    color: @text_primary;
+}
+
+.text-secondary {
+    color: @text_secondary;
+}
+
+.text-muted {
+    color: @text_muted;
+}
+
+.transcript-text {
+    font-family: "Inter", "Roboto", "Noto Sans", sans-serif;
+    font-size: 14px;
+    color: @text_primary;
+    line-height: 1.5;
+}
+
+.answer-text {
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+    font-size: 13px;
+    color: @text_primary;
+    line-height: 1.6;
+}
+
+.heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: @text_primary;
+    margin-bottom: 8px;
+}
+
+.label-small {
+    font-size: 11px;
+    color: @text_muted;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Buttons */
+.glass-button {
+    background-color: rgba(137, 180, 250, 0.15);
+    border: 1px solid rgba(137, 180, 250, 0.3);
+    border-radius: 8px;
+    color: @accent_blue;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 200ms ease;
+}
+
+.glass-button:hover {
+    background-color: rgba(137, 180, 250, 0.25);
+    border-color: rgba(137, 180, 250, 0.5);
+}
+
+.glass-button:active {
+    background-color: rgba(137, 180, 250, 0.35);
+}
+
+.glass-button.destructive {
+    background-color: rgba(243, 139, 168, 0.15);
+    border-color: rgba(243, 139, 168, 0.3);
+    color: @accent_red;
+}
+
+.glass-button.destructive:hover {
+    background-color: rgba(243, 139, 168, 0.25);
+}
+
+.glass-button.success {
+    background-color: rgba(166, 227, 161, 0.15);
+    border-color: rgba(166, 227, 161, 0.3);
+    color: @accent_green;
+}
+
+.primary-button {
+    background-color: @accent_blue;
+    color: @bg_dark;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+.primary-button:hover {
+    background-color: rgba(137, 180, 250, 0.9);
+}
+
+/* Toggle buttons */
+.toggle-button {
+    background-color: transparent;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: @text_secondary;
+}
+
+.toggle-button:checked {
+    background-color: rgba(137, 180, 250, 0.2);
+    border-color: @accent_blue;
+    color: @accent_blue;
+}
+
+/* Record button */
+.record-button {
+    background-color: rgba(243, 139, 168, 0.2);
+    border: 2px solid @accent_red;
+    border-radius: 50%;
+    min-width: 48px;
+    min-height: 48px;
+    color: @accent_red;
+}
+
+.record-button:checked {
+    background-color: @accent_red;
+    color: @bg_dark;
+}
+
+/* Dropdown / ComboBox */
+dropdown,
+combobox {
+    background-color: @bg_light;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: @text_primary;
+}
+
+dropdown:hover,
+combobox:hover {
+    border-color: @border_focus;
+}
+
+dropdown popover,
+combobox popover {
+    background-color: @bg_medium;
+    border: 1px solid @border_color;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+/* Text views and scroll areas */
+textview {
+    background-color: transparent;
+    color: @text_primary;
+    caret-color: @accent_blue;
+}
+
+textview text {
+    background-color: transparent;
+}
+
+scrolledwindow {
+    background-color: transparent;
+}
+
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    min-width: 8px;
+    min-height: 8px;
+}
+
+scrollbar slider:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Code blocks */
+.code-block {
+    background-color: rgba(17, 17, 27, 0.95);
+    border: 1px solid rgba(69, 71, 90, 0.5);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 12px;
+}
+
+.code-header {
+    background-color: rgba(49, 50, 68, 0.8);
+    border-bottom: 1px solid @border_color;
+    border-radius: 8px 8px 0 0;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: @text_muted;
+}
+
+/* Status indicators */
+.status-indicator {
+    min-width: 8px;
+    min-height: 8px;
+    border-radius: 50%;
+    background-color: @text_muted;
+}
+
+.status-indicator.active {
+    background-color: @accent_green;
+    box-shadow: 0 0 8px rgba(166, 227, 161, 0.5);
+}
+
+.status-indicator.recording {
+    background-color: @accent_red;
+    box-shadow: 0 0 8px rgba(243, 139, 168, 0.5);
+    animation: pulse 1s infinite;
+}
+
+.status-indicator.processing {
+    background-color: @accent_yellow;
+    box-shadow: 0 0 8px rgba(249, 226, 175, 0.5);
+}
+
+/* Audio level meter */
+.audio-meter {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    min-height: 4px;
+}
+
+.audio-meter-fill {
+    background: linear-gradient(90deg, @accent_green, @accent_yellow, @accent_red);
+    border-radius: 4px;
+    min-height: 4px;
+}
+
+/* Separator */
+separator {
+    background-color: @border_color;
+    min-height: 1px;
+    min-width: 1px;
+}
+
+/* Paned divider */
+paned > separator {
+    background-color: @border_color;
+    min-width: 2px;
+    min-height: 2px;
+}
+
+paned > separator:hover {
+    background-color: @accent_blue;
+}
+
+/* Entry fields */
+entry {
+    background-color: @bg_light;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: @text_primary;
+    caret-color: @accent_blue;
+}
+
+entry:focus {
+    border-color: @border_focus;
+    box-shadow: 0 0 0 2px rgba(137, 180, 250, 0.2);
+}
+
+/* Labels */
+label {
+    color: @text_primary;
+}
+
+/* Interview type badges */
+.badge {
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge.dsa {
+    background-color: rgba(137, 180, 250, 0.2);
+    color: @accent_blue;
+}
+
+.badge.system-design {
+    background-color: rgba(203, 166, 247, 0.2);
+    color: @accent_purple;
+}
+
+.badge.behavioral {
+    background-color: rgba(166, 227, 161, 0.2);
+    color: @accent_green;
+}
+
+/* Tooltips */
+tooltip {
+    background-color: @bg_dark;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: @text_primary;
+}
+
+/* Overlay mode styles */
+.overlay-mode {
+    background-color: rgba(30, 30, 46, 0.85);
+}
+
+.minimal-mode {
+    background-color: rgba(30, 30, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Spinner */
+spinner {
+    color: @accent_blue;
+}
+
+/* Progress bar */
+progressbar {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    min-height: 4px;
+}
+
+progressbar progress {
+    background-color: @accent_blue;
+    border-radius: 4px;
+}
+
+/* Notifications / Toast */
+.notification {
+    background-color: @bg_medium;
+    border: 1px solid @border_color;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.notification.error {
+    border-left: 3px solid @accent_red;
+}
+
+.notification.success {
+    border-left: 3px solid @accent_green;
+}
+
+.notification.warning {
+    border-left: 3px solid @accent_yellow;
+}

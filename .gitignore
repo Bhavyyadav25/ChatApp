@@ -1,0 +1,5 @@
+interview_assistant.egg-info/
+venv/
+__pycache__/
+*.pyc
+.env

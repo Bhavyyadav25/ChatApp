@@ -1,0 +1,99 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "interview-assistant"
+version = "0.1.0"
+description = "AI-powered interview assistant for Linux with screen-share avoidance"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Interview Assistant"}
+]
+keywords = ["interview", "ai", "assistant", "gtk", "linux"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: X11 Applications :: GTK",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Desktop Environment",
+]
+
+dependencies = [
+    "PyGObject>=3.46.0",
+    "pycairo>=1.25.0",
+    "anthropic>=0.40.0",
+    "faster-whisper>=1.0.0",
+    "sounddevice>=0.4.6",
+    "soundfile>=0.12.1",
+    "numpy>=1.26.0",
+    "pystray>=0.19.5",
+    "pynput>=1.7.6",
+    "python-xlib>=0.33",
+    "sqlalchemy>=2.0.0",
+    "aiosqlite>=0.19.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.0.0",
+    "tomli>=2.0.1",
+    "tomli-w>=1.0.0",
+    "aiohttp>=3.9.0",
+    "Pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "ruff>=0.1.9",
+    "black>=23.12.0",
+    "pre-commit>=3.6.0",
+]
+
+[project.scripts]
+interview-assistant = "interview_assistant.__main__:main"
+
+[project.gui-scripts]
+interview-assistant-gui = "interview_assistant.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/interview-assistant/interview-assistant"
+Repository = "https://github.com/interview-assistant/interview-assistant"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["interview_assistant*"]
+
+[tool.setuptools.package-data]
+interview_assistant = ["resources/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+ignore = ["E501"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
