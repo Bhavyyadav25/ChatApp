@@ -69,6 +69,11 @@ class InterviewAssistantApp(Adw.Application):
             # Ensure config directory exists
             CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
+            # Start web viewer for phone access
+            from interview_assistant.services.web_viewer import get_web_viewer
+            self._web_viewer = get_web_viewer()
+            self._web_viewer.start()
+
             # Create main window
             from interview_assistant.ui.main_window import MainWindow
             self.main_window = MainWindow(self)
